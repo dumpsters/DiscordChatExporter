@@ -26,7 +26,7 @@ internal partial class CsvMessageWriter : MessageWriter
             : markdown;
 
     public override async ValueTask WritePreambleAsync(CancellationToken cancellationToken = default) =>
-        await _writer.WriteLineAsync("AuthorID,Author,Date,Content,Attachments,Reactions");
+        await _writer.WriteLineAsync("AuthorID,Author,DisplayName,Date,Content,Attachments,Reactions");
 
     private async ValueTask WriteAttachmentsAsync(
         IReadOnlyList<Attachment> attachments,
@@ -80,6 +80,10 @@ internal partial class CsvMessageWriter : MessageWriter
 
         // Author name
         await _writer.WriteAsync(CsvEncode(message.Author.FullName));
+        await _writer.WriteAsync(',');
+
+        // Display name
+        await _writer.WriteAsync(CsvEncode(message.Author.DisplayName));
         await _writer.WriteAsync(',');
 
         // Message timestamp
