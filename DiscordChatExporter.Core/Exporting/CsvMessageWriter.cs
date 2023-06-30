@@ -15,7 +15,7 @@ internal partial class CsvMessageWriter : MessageWriter
     public CsvMessageWriter(Stream stream, ExportContext context)
         : base(stream, context)
     {
-        _writer = new StreamWriter(stream, Encoding.UTF8);
+        _writer = new StreamWriter(stream, new UTF8Encoding(false));
     }
 
     private async ValueTask<string> FormatMarkdownAsync(
